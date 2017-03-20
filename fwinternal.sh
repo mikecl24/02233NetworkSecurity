@@ -39,27 +39,27 @@ intdmz="192.168.74.0/24"
 cluster="192.168.37.0/24"
 
 # User lookups from User Network dealt with Internal DNS 
-iptables -A FORWARD -p UDP -d '$intdns' --dport 53 -s '$usernet' -j ACCEPT
-iptables -A FORWARD -p UDP -s '$intdns' --sport 53 -d '$usernet' -j ACCEPT
+iptables -A FORWARD -p UDP -d $intdns --dport 53 -s $usernet -j ACCEPT
+iptables -A FORWARD -p UDP -s $intdns --sport 53 -d $usernet -j ACCEPT
 
 # consider UDP states
 
 # Redirect HTTP queries from the User Network to the Internal HTTP Proxy
-iptables -A FORWARD -p TCP -s '$usernet' -d '$intproxy' --dport 8080 -j ACCEPT
-iptables -A FORWARD -p TCP -d '$usernet' -s '$intproxy' --sport 8080 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intproxy --dport 8080 -j ACCEPT
+iptables -A FORWARD -p TCP -d $usernet -s $intproxy --sport 8080 -j ACCEPT
 
 # consider TCP states
 
 # Accept POP over SSL for user fron User Network 
-iptables -A FORWARD -p TCP -s '$usernet' -d '$intadmin' --dport 995 -j ACCEPT
-iptables -A FORWARD -p TCP -s '$usernet' -d '$intadmin' --dport 110 -j ACCEPT
-iptables -A FORWARD -p TCP -d '$usernet' -s '$intadmin' --dport 995 -j ACCEPT
-iptables -A FORWARD -p TCP -d '$usernet' -s '$intadmin' --dport 110 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin --dport 995 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin --dport 110 -j ACCEPT
+iptables -A FORWARD -p TCP -d $usernet -s $intadmin--dport 995 -j ACCEPT
+iptables -A FORWARD -p TCP -d $usernet -s $intadmin --dport 110 -j ACCEPT
 
 # Use Internal Admin as a proxy for mail for User Network
-iptables -A FORWARD -p TCP -s '$usernet' -d '$intadmin' --match multiport --dports 25,587 -j ACCEPT
-iptables -A FORWARD -p TCP -s '$intadmin' -d '$usernet' --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $intadmin -d $usernet --match multiport --dports 25,587 -j ACCEPT
 
 # Accept SSH login to Cluser
-iptables -A FORWARD -p TCP --dport 22 -d '$fwinternal_eth0' -j ACCEPT
-iptables -A FORWARD -p TCP --sport 22 -d '$fwinternal_eth0' -j ACCEPT
+iptables -A FORWARD -p TCP --dport 22 -d $fwinternal_eth0 -j ACCEPT
+iptables -A FORWARD -p TCP --sport 22 -d $fwinternal_eth0 -j ACCEPT
