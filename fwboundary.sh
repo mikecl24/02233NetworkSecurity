@@ -47,7 +47,7 @@ iptables -A FORWARD -p UDP -s $extdns --dport 53 -j ACCEPT
 
 # Whitelist the trusted servers for DNS Zone Transfer
 iptables -N CHK-WHITELIST
-iptables -A CHK-WHITELIST -s example.net -j ACCEPT
+#iptables -A CHK-WHITELIST -s example.net -j ACCEPT
 iptables -A CHK-WHITELIST -s 192.168.0.1 -j ACCEPT
 
 # Accept Zone Transfer to External DNS Server only froñ trusted servers
