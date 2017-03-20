@@ -1,5 +1,3 @@
-\subsection{fwmain}
-\begin{verbatim}
 #!/bin/bash
 #
 # a02_fwmain.sh - Script to setup the firewall in the fwboundary computer
@@ -74,4 +72,3 @@ iptables -A FORWARD -p TCP -d $intadmin --match multiport
 # Accept SSH login to Cluser
 iptables -A FORWARD -p TCP --dport 22 -d $fwcluster_eth0 -s $usernet -j ACCEPT
 iptables -A FORWARD -p TCP --sport 22 -s $fwcluster_eth0 -d $usernet  -j ACCEPT    
-\end{verbatim}
