@@ -39,9 +39,9 @@ intdmz="192.168.74.0/24"
 cluster="192.168.37.0/24"
 
 # User lookups from the internet
-iptables -t nat -A PREROUTING -p UDP --dport 53 -j DNAT --to '$extdns'
-iptables -A FORWARD -p UDP -d '$extdns' --dport 53 -j ACCEPT
-iptables -A FORWARD -p UDP -s '$extdns' --dport 53 -j ACCEPT
+iptables -t nat -A PREROUTING -p UDP --dport 53 -j DNAT --to $extdns
+iptables -A FORWARD -p UDP -d $extdns --dport 53 -j ACCEPT
+iptables -A FORWARD -p UDP -s $extdns --dport 53 -j ACCEPT
 
 # Consider UDP states
 
@@ -51,39 +51,39 @@ iptables -A CHK-WHITELIST -s example.net -j ACCEPT
 iptables -A CHK-WHITELIST -s 192.168.0.1 -j ACCEPT
 
 # Accept Zone Transfer to External DNS Server only froñ trusted servers
-iptables -t nat -A PREROUTING -p TCP --dport 53 -j DNAT --to '$extdns'
-iptables -A FORWARD -p TCP -d '$extdns' --dport 53 -j CHK-WHITELIST
-iptables -A FORWARD -p TCP -s '$extdns' --sport 53 -j CHK-WHITELIST
+iptables -t nat -A PREROUTING -p TCP --dport 53 -j DNAT --to $extdns
+iptables -A FORWARD -p TCP -d $extdns --dport 53 -j CHK-WHITELIST
+iptables -A FORWARD -p TCP -s $extdns --sport 53 -j CHK-WHITELIST
 
 # Accept HTTP queries from Internet to the External Web Sever
-iptables -t nat -A PREROUTING -p TCP --dport 80 -j DNAT --to '$extweb'
-iptables -A FORWARD -p TCP -d '$extweb' --dport 80 -j ACCEPT
-iptables -A FORWARD -p TCP -s '$extweb' --sport 80 -j ACCEPT
+iptables -t nat -A PREROUTING -p TCP --dport 80 -j DNAT --to $extweb
+iptables -A FORWARD -p TCP -d $extweb --dport 80 -j ACCEPT
+iptables -A FORWARD -p TCP -s $extweb --sport 80 -j ACCEPT
 #maybe consider tcp states
 
 # Redirect HTTP queries from the User Network to the Internal HTTP Proxy
-iptables -A FORWARD -p TCP -s '$intproxy' --dport 80 -j ACCEPT
-iptables -A FORWARD -p TCP -d '$intproxy' --sport 80 -j ACCEPT
+iptables -A FORWARD -p TCP -s $intproxy --dport 80 -j ACCEPT
+iptables -A FORWARD -p TCP -d $intproxy --sport 80 -j ACCEPT
 
 # consider tcp states
 
 # Accept SMTP queries from Internet
-iptables -t nat -A PREROUTING -p TCP --dport 587 -j DNAT --to '$extmail'
-iptables -t nat -A PREROUTING -p TCP --dport 25 -j DNAT --to '$extmail'
-iptables -A FORWARD -p TCP -d '$extmail' --dport 25 -j ACCEPT
-iptables -A FORWARD -p TCP -d '$extmail' --dport 587 -j ACCEPT
-iptables -A FORWARD -p TCP -s '$extmail' --sport 25 -j ACCEPT
-iptables -A FORWARD -p TCP -s '$extmail' --sport 587 -j ACCEPT
+iptables -t nat -A PREROUTING -p TCP --dport 587 -j DNAT --to $extmail
+iptables -t nat -A PREROUTING -p TCP --dport 25 -j DNAT --to $extmail
+iptables -A FORWARD -p TCP -d $extmail --dport 25 -j ACCEPT
+iptables -A FORWARD -p TCP -d $extmail --dport 587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $extmail --sport 25 -j ACCEPT
+iptables -A FORWARD -p TCP -s $extmail --sport 587 -j ACCEPT
 
 # Use Internal Admin as a proxy for mail for User Network
-iptables -A FORWARD -p TCP -s '$intadmin' --match multiport --dport 25,587 -j ACCEPT
-iptables -A FORWARD -p TCP -d '$intadmin' --match multiport --dport 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $intadmin --match multiport --dport 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -d $intadmin --match multiport --dport 25,587 -j ACCEPT
 
 # Accept SSH login to Cluser
-iptables -t nat -A PREROUTING -p TCP --dport 22 -j DNAT --to '$fwinternal_eth1'
-iptables -A FORWARD -p TCP --dport 22 -d '$fwinternal_eth0' -j ACCEPT
-iptables -A FORWARD -p TCP --sport 22 -s '$fwinternal_eth0' -j ACCEPT
+iptables -t nat -A PREROUTING -p TCP --dport 22 -j DNAT --to $fwinternal_eth1
+iptables -A FORWARD -p TCP --dport 22 -d $fwinternal_eth0 -j ACCEPT
+iptables -A FORWARD -p TCP --sport 22 -s $fwinternal_eth0 -j ACCEPT
 
 # Accept mail from the cluster
-iptables -A FORWARD -p TCP -s '$cluster' --match multiport --dports 25,587 -j ACCEPT
-iptables -A FORWARD -p TCP -d '$cluster' --match multiport --sports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 -j ACCEPT
