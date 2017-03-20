@@ -59,3 +59,7 @@ iptables -A INPUT -p ICMP -s $cluster --icmp-type echo-request -j ACCEPT
 iptables -A OUTPUT -p ICMP -d $cluster --icmp-type echo-reply -j ACCEPT
 iptables -A INPUT -p TCP -s $cluster --sport 22 -j ACCEPT
 iptables -A OUTPUT -p TCP -d $cluster --dport 22 -j ACCEPT
+iptables -A INPUT -p TCP -s $cluster --dport 22 -j ACCEPT
+iptables -A OUTPUT -p TCP -d $cluster --sport 22 -j ACCEPT
+
+
