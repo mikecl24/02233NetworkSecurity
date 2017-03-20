@@ -61,10 +61,8 @@ iptables -A FORWARD -p TCP -d $usernet -s $intadmin
   --dport 110 -j ACCEPT
 
 # Use Internal Admin as a proxy for mail for User Network
-iptables -A FORWARD -p TCP -s $usernet -d $intadmin --match multiport 
-    --dports 25,587 -j ACCEPT
-iptables -A FORWARD -p TCP -s $intadmin -d $usernet --match multiport 
-    --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $intadmin -d $usernet --match multiport --dports 25,587 -j ACCEPT
 
 # Accept SSH login to Cluser
 iptables -A FORWARD -p TCP -s $usernet --dport 22 -d $fwcluster_eth0 -j ACCEPT
