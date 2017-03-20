@@ -59,7 +59,7 @@ iptables -A FORWARD -p TCP -d $extdns --dport 53 -j CHK-WHITELIST
 iptables -A FORWARD -p TCP -s $extdns --sport 53 -j CHK-WHITELIST
 
 # Accept HTTP queries from Internet to the External Web Sever
-iptables -t nat -A PREROUTING -p TCP --dport 80 ! -s $intproxy ! -d $intproxy  -j DNAT --to $extweb:80
+iptables -t nat -A PREROUTING -p TCP ! -s $intproxy ! -d $intproxy --dport 80 -j DNAT --to $extweb:80
 iptables -A FORWARD -p TCP -d $extweb --dport 80 -j ACCEPT
 iptables -A FORWARD -p TCP -s $extweb --sport 80 -j ACCEPT
 #maybe consider tcp states
