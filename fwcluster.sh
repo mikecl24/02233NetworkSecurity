@@ -46,7 +46,7 @@ iptables -A FORWARD -p UDP -s $extdns --sport 53 -d $cluster -j ACCEPT
 
 # Accept SSH login to Cluser
 iptables -A INPUT -p TCP -s $usernet --dport 22 -j ACCEPT
-iptables -A OUTPUT -p TCP -d $usernet --sport 22 -j ACCEP
+iptables -A OUTPUT -p TCP -d $usernet --sport 22 -j ACCEPT
 
 # Accept mail from the cluster
 iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 -j ACCEPT
