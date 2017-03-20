@@ -14,7 +14,7 @@ iptables -F
 # DROP everything not covered by the policies
 iptables -P FORWARD DROP
 iptables -P INPUT DROP
-iptables -P OUPUT DROP
+iptables -P OUTPUT DROP
 
 # Variables
 fwboundary_eth0="192.168.0.2"
