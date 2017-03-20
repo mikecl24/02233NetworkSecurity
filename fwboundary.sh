@@ -68,8 +68,8 @@ iptables -A FORWARD -p TCP -d $intproxy --sport 80 -j ACCEPT
 # consider tcp states
 
 # Accept SMTP queries from Internet
-iptables -t nat -A PREROUTING -p TCP --dport 587 -j DNAT --to $extmail:587
-iptables -t nat -A PREROUTING -p TCP --dport 25 -j DNAT --to $extmail:25
+iptables -t nat -A PREROUTING -p TCP ! -d $cluster ! -s $cluster --dport 587 -j DNAT --to $extmail:587
+iptables -t nat -A PREROUTING -p TCP ! -d $cluster ! -s $cluster --dport 25 -j DNAT --to $extmail:25
 iptables -A FORWARD -p TCP -d $extmail --dport 25 -j ACCEPT
 iptables -A FORWARD -p TCP -d $extmail --dport 587 -j ACCEPT
 iptables -A FORWARD -p TCP -s $extmail --sport 25 -j ACCEPT
