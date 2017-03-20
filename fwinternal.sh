@@ -51,14 +51,10 @@ iptables -A FORWARD -p TCP -d $usernet -s $intproxy --sport 8080 -j ACCEPT
 # consider TCP states
 
 # Accept POP over SSL for user fron User Network 
-iptables -A FORWARD -p TCP -s $usernet -d $intadmin 
-  --dport 995 -j ACCEPT
-iptables -A FORWARD -p TCP -s $usernet -d $intadmin 
-  --dport 110 -j ACCEPT
-iptables -A FORWARD -p TCP -d $usernet -s $intadmin 
-  --dport 995 -j ACCEPT
-iptables -A FORWARD -p TCP -d $usernet -s $intadmin 
-  --dport 110 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin --dport 995 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin --dport 110 -j ACCEPT
+iptables -A FORWARD -p TCP -d $usernet -s $intadmin --dport 995 -j ACCEPT
+iptables -A FORWARD -p TCP -d $usernet -s $intadmin --dport 110 -j ACCEPT
 
 # Use Internal Admin as a proxy for mail for User Network
 iptables -A FORWARD -p TCP -s $usernet -d $intadmin --match multiport --dports 25,587 -j ACCEPT
