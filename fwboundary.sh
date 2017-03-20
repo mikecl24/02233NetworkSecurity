@@ -75,10 +75,8 @@ iptables -A FORWARD -p TCP -s $extmail --sport 25 -j ACCEPT
 iptables -A FORWARD -p TCP -s $extmail --sport 587 -j ACCEPT
 
 # Use Internal Admin as a proxy for mail for User Network
-iptables -A FORWARD -p TCP -s $intadmin --match multiport --dport 25,587 
-    -j ACCEPT
-iptables -A FORWARD -p TCP -d $intadmin --match multiport --dport 25,587 
-    -j ACCEPT
+iptables -A FORWARD -p TCP -s $intadmin --match multiport --dport 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -d $intadmin --match multiport --dport 25,587 -j ACCEPT
 
 # Accept SSH login to Cluser
 iptables -t nat -A PREROUTING -p TCP --dport 22 -j DNAT --to $fwcluster_eth0
@@ -86,7 +84,5 @@ iptables -A FORWARD -p TCP --dport 22 -d $fwcluster_eth0 -j ACCEPT
 iptables -A FORWARD -p TCP --sport 22 -s $fwcluster_eth0 -j ACCEPT
 
 # Accept mail from the cluster
-iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 
-    -j ACCEPT
-iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 
-    -j ACCEPT
+iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 -j ACCEPT
