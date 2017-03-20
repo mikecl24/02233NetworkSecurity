@@ -1,6 +1,3 @@
-\section{Scripts}
-\subsection{fwboundary}
-\begin{verbatim}    
 #!/bin/bash
 #
 # a02_fwboundary.sh - Script to setup the firewall in the fwboundary computer
