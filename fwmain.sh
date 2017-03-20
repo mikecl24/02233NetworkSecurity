@@ -6,7 +6,7 @@
 # Mike Castro Lundin -s162901
 # Juan Manuel Donaire Felipe - s150662 
 # Sébastien Pierre Christophe Gondron - s162339
-# Aleksandrs Levi -
+# Aleksandrs Levi - s162870
 
 # Delete all existing rules
 iptables -F
