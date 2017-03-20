@@ -53,9 +53,9 @@ iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 -j ACCE
 iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 -j ACCEPT
 
 # ACCEPT ping from cluster
-iptables -A OUTPUT -p ICMP -s $cluster --dport 1 -j ACCEPT
-iptables -A OUTPUT -p ICMP -s $cluster --dport 58 -j ACCEPT
-iptables -A INPUT -p ICMP -d $cluster --sport 1 -j ACCEPT
-iptables -A INPUT -p ICMP -d $cluster --sport 58 -j ACCEPT
+iptables -A OUTPUT -p ICMP -s $cluster --icmp-type echo-request -j ACCEPT
+iptables -A INPUT -p ICMP -d $cluster --icmp-type echo-reply -j ACCEPT
+iptables -A INPUT -p ICMP -s $cluster --icmp-type echo-request -j ACCEPT
+iptables -A OUTPUT -p ICMP -d $cluster --icmp-type echo-reply -j ACCEPT
 iptables -A INPUT -p TCP -s $cluster --sport 22 -j ACCEPT
 iptables -A OUTPUT -p TCP -d $cluster --dport 22 -j ACCEPT
