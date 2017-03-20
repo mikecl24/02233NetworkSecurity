@@ -39,21 +39,21 @@ intdmz="192.168.74.0/24"
 cluster="192.168.37.0/24"
 
 # User lookups from the cluster dealt with external dns
-iptables -A FORWARD -p UDP -d '$extdns' --dport 53 -s '$cluster' -j ACCEPT
-iptables -A FORWARD -p UDP -s '$extdns' --sport 53 -d '$cluster' -j ACCEPT
+iptables -A FORWARD -p UDP -d $extdns --dport 53 -s $cluster -j ACCEPT
+iptables -A FORWARD -p UDP -s $extdns --sport 53 -d $cluster -j ACCEPT
 
 # consider UDP states
 
 # Accept SSH login to Cluser
-iptables -A INPUT -p TCP -s '$usernet' --dport 22 -j ACCEPT
-iptables -A OUTPUT -p TCP -d '$usernet' --sport 22 -j ACCEP
+iptables -A INPUT -p TCP -s $usernet --dport 22 -j ACCEPT
+iptables -A OUTPUT -p TCP -d $usernet --sport 22 -j ACCEP
 
 # Accept mail from the cluster
-iptables -A FORWARD -p TCP -s '$cluster' --match multiport --dports 25,587 -j ACCEPT
-iptables -A FORWARD -p TCP -d '$cluster' --match multiport --sports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 -j ACCEPT
 
 # ACCEPT ping from cluster
-iptables -A OUTPUT -p ICMP -s '$cluster' --match multiport --dports 1,58 -j ACCEPT
-iptables -A INPUT -p ICMP -d  '$cluster' --match multiport --sports 1,58 -j ACCEPT
-iptables -A INPUT -p TCP -s '$cluster' --sport 22 -j ACCEPT
-iptables -A OUTPUT -p TCP -d '$cluster' --dport 22 -j ACCEPT
+iptables -A OUTPUT -p ICMP -s $cluster --match multiport --dports 1,58 -j ACCEPT
+iptables -A INPUT -p ICMP -d  $cluster --match multiport --sports 1,58 -j ACCEPT
+iptables -A INPUT -p TCP -s $cluster --sport 22 -j ACCEPT
+iptables -A OUTPUT -p TCP -d $cluster --dport 22 -j ACCEPT
