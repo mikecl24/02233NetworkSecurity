@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# a02_fwboundary.sh - Script to setup the firewall in the fwboundary computer
+# a02_fwinternal.sh - Script to setup the firewall in the fwboundary computer
 #
 # Made by:
 # Mike Castro Lundin -s162901
@@ -51,15 +51,21 @@ iptables -A FORWARD -p TCP -d $usernet -s $intproxy --sport 8080 -j ACCEPT
 # consider TCP states
 
 # Accept POP over SSL for user fron User Network 
-iptables -A FORWARD -p TCP -s $usernet -d $intadmin --dport 995 -j ACCEPT
-iptables -A FORWARD -p TCP -s $usernet -d $intadmin --dport 110 -j ACCEPT
-iptables -A FORWARD -p TCP -d $usernet -s $intadmin --dport 995 -j ACCEPT
-iptables -A FORWARD -p TCP -d $usernet -s $intadmin --dport 110 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin 
+  --dport 995 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin 
+  --dport 110 -j ACCEPT
+iptables -A FORWARD -p TCP -d $usernet -s $intadmin 
+  --dport 995 -j ACCEPT
+iptables -A FORWARD -p TCP -d $usernet -s $intadmin 
+  --dport 110 -j ACCEPT
 
 # Use Internal Admin as a proxy for mail for User Network
-iptables -A FORWARD -p TCP -s $usernet -d $intadmin --match multiport --dports 25,587 -j ACCEPT
-iptables -A FORWARD -p TCP -s $intadmin -d $usernet --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet -d $intadmin --match multiport 
+    --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $intadmin -d $usernet --match multiport 
+    --dports 25,587 -j ACCEPT
 
 # Accept SSH login to Cluser
-iptables -A FORWARD -p TCP --dport 22 -d $fwinternal_eth0 -j ACCEPT
-iptables -A FORWARD -p TCP --sport 22 -d $fwinternal_eth0 -j ACCEPT
+iptables -A FORWARD -p TCP -s $usernet --dport 22 -d $fwcluster_eth0 -j ACCEPT
+iptables -A FORWARD -p TCP -d $usernet --sport 22 -s $fwcluster_eth0 -j ACCEPT 
