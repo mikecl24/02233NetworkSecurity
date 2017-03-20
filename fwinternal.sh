@@ -9,7 +9,7 @@
 # Aleksandrs Levi -
 
 # Delete all existing rules
-iptales -F
+iptables -F
 
 # DROP everything not covered by the policies
 iptables -P FORWARD DROP
