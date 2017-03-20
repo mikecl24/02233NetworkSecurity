@@ -10,6 +10,7 @@
 
 # Delete all existing rules
 iptables -F
+iptables -t nat -F
 
 # DROP everything not covered by the policies
 iptables -P FORWARD DROP
