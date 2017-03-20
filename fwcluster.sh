@@ -49,10 +49,8 @@ iptables -A INPUT -p TCP -s $usernet --dport 22 -j ACCEPT
 iptables -A OUTPUT -p TCP -d $usernet --sport 22 -j ACCEPT
 
 # Accept mail from the cluster
-iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 
-    -j ACCEPT
-iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 
-    -j ACCEPT
+iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 -j ACCEPT
 
 # ACCEPT ping from cluster
 iptables -A OUTPUT -p ICMP -s $cluster --icmp-type echo-request -j ACCEPT
