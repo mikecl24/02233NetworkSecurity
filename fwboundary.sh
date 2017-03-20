@@ -49,6 +49,7 @@ iptables -A FORWARD -p UDP -s $extdns --dport 53 -j ACCEPT
 iptables -N CHK-WHITELIST
 #iptables -A CHK-WHITELIST -s example.net -j ACCEPT
 iptables -A CHK-WHITELIST -s 192.168.0.1 -j ACCEPT
+iptables -A CHK-WHITELIST -d 192.168.0.1 -j ACCEPT
 
 # Accept Zone Transfer to External DNS Server only from trusted servers
 iptables -t nat -A PREROUTING -p TCP --dport 53 -j DNAT --to $extdns:53
