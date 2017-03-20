@@ -93,4 +93,3 @@ iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587
     -j ACCEPT
 iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 
     -j ACCEPT
-\end{verbatim}
