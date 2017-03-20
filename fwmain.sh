@@ -58,16 +58,12 @@ iptables -A FORWARD -p TCP -d $intproxy --sport 80 -j ACCEPT
 # consider tcp states
 
 # Accept SMTP queries for internal company users 
-iptables -A FORWARD -p TCP -d $intadmin -s $extmail --match multiport
-  --dports 25,587 -j ACCEPT
-iptables -A FORWARD -p TCP -s $intadmin -d $extmail --match multiport
-  --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -d $intadmin -s $extmail --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $intadmin -d $extmail --match multiport --dports 25,587 -j ACCEPT
 
 # Use Internal Admin as a proxy for mail for User Network
-iptables -A FORWARD -p TCP -s $intadmin --match multiport 
-  --dports 25,587 -j ACCEPT
-iptables -A FORWARD -p TCP -d $intadmin --match multiport 
-  --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -s $intadmin --match multiport --dports 25,587 -j ACCEPT
+iptables -A FORWARD -p TCP -d $intadmin --match multiport --dports 25,587 -j ACCEPT
 
 # Accept SSH login to Cluser
 iptables -A FORWARD -p TCP --dport 22 -d $fwcluster_eth0 -s $usernet -j ACCEPT
