@@ -6,7 +6,7 @@
 # Mike Castro Lundin -s162901
 # Juan Manuel Donaire Felipe - s150662 
 # Sébastien Pierre Christophe Gondron - s162339
-# Aleksandrs Levi -
+# Aleksandrs Levi - s162870
 
 # Delete all existing rules
 iptables -F
@@ -53,7 +53,9 @@ iptables -A FORWARD -p TCP -s $cluster --match multiport --dports 25,587 -j ACCE
 iptables -A FORWARD -p TCP -d $cluster --match multiport --sports 25,587 -j ACCEPT
 
 # ACCEPT ping from cluster
-iptables -A OUTPUT -p ICMP -s $cluster --match multiport --dports 1,58 -j ACCEPT
-iptables -A INPUT -p ICMP -d  $cluster --match multiport --sports 1,58 -j ACCEPT
+iptables -A OUTPUT -p ICMP -s $cluster --dport 1 -j ACCEPT
+iptables -A OUTPUT -p ICMP -s $cluster --dport 58 -j ACCEPT
+iptables -A INPUT -p ICMP -d $cluster --sport 1 -j ACCEPT
+iptables -A INPUT -p ICMP -d $cluster --sport 58 -j ACCEPT
 iptables -A INPUT -p TCP -s $cluster --sport 22 -j ACCEPT
 iptables -A OUTPUT -p TCP -d $cluster --dport 22 -j ACCEPT
