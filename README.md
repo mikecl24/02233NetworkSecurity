@@ -1,1 +1,3 @@
-# 02233NetworkSecurity
+# 02233NetworkSecurity #
+
+Firewall rule scripts for a specified network.
